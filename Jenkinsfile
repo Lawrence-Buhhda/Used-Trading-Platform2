@@ -6,6 +6,9 @@ pipeline {
     
     environment {
         SCANNER_HOME = tool 'sonar-scanner'
+        GITHUB_URL = "https://github.com"
+        GITHUB_ORG = "Lawrence-Buhhda"
+        GITHUB_REPO = "Used-Trading-Platform2"
     }
     
     stages {
@@ -58,7 +61,29 @@ pipeline {
                 not { changeRequest() }
             }
             steps {
-                git branch: 'master', changelog: false, credentialsId: '705f6177-34ad-4a85-9aaf-e61f089a56a2', poll: false, url: 'https://github.com/Lawrence-Buhhda/Used-Trading-Platform2.git'            
+                // git branch: 'master', changelog: false, credentialsId: '705f6177-34ad-4a85-9aaf-e61f089a56a2', poll: false, url: 'https://github.com/Lawrence-Buhhda/Used-Trading-Platform2.git'   
+                script {
+                    def scmVars = checkout(
+                                        [$class: 'GitSCM', branches: [[name: "${ghprbActualCommit}"]], 
+                                        doGenerateSubmoduleConfigurations: false,
+                                        submoduleCfg: [], 
+                                        extensions: [
+                                            [$class: 'RelativeTargetDirectory', relativeTargetDir: 'codes'],
+                                            [$class: 'CleanBeforeCheckout']
+                                        ],
+                                        userRemoteConfigs: [
+                                                [
+                                                    credentialsId: '705f6177-34ad-4a85-9aaf-e61f089a56a2', 
+                                                    name: 'master', 
+                                                    refspec: '+refs/pull/*:refs/remotes/origin/pr/*', 
+                                                    url: "${GITHUB_URL}/${GITHUB_ORG}/${GITHUB_REPO}.git"
+                                                ]
+                                            ]
+                                        ]
+                                    )
+                    env.GIT_BRANCH = "${scmVars.GIT_BRANCH}"
+                    env.GIT_COMMIT = "${scmVars.GIT_COMMIT}"
+                }
             }
         }
         
