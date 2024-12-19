@@ -74,7 +74,7 @@ pipeline {
                                         userRemoteConfigs: [
                                                 [
                                                     credentialsId: '705f6177-34ad-4a85-9aaf-e61f089a56a2', 
-                                                    name: 'master', 
+                                                    name: 'origin', 
                                                     refspec: '+refs/pull/*:refs/remotes/origin/pr/*', 
                                                     url: "${GITHUB_URL}/${GITHUB_ORG}/${GITHUB_REPO}.git"
                                                 ]
