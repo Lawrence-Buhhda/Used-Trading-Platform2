@@ -16,8 +16,8 @@ pipeline {
             steps {
                 script {
                     // 设置 Git 代理
-                    sh 'git config --global http.proxy "http://192.168.71.57:10809"'
-                    sh 'git config --global https.proxy "https://192.168.71.57:10809"'
+                    sh 'git config --global http.proxy "http://192.168.71.59:10809"'
+                    sh 'git config --global https.proxy "https://192.168.71.59:10809"'
                 }
             }
         }
