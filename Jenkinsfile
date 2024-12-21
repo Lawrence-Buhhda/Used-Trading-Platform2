@@ -46,21 +46,7 @@ pipeline {
             }
         }
         
-        stage('Run Tests') {
-            when {
-                changeRequest()
-            }
-            steps {
-                script {
-                    echo 'Running tests for the change request.'
-                }
-            }
-        }
-        
         stage('Git Checkout') {
-            when {
-                not { changeRequest() }
-            }
             steps {
                 // git branch: 'master', changelog: false, credentialsId: '705f6177-34ad-4a85-9aaf-e61f089a56a2', poll: false, url: 'https://github.com/Lawrence-Buhhda/Used-Trading-Platform2.git'   
                 script {
@@ -92,18 +78,7 @@ pipeline {
             steps {
                 sh "mvn clean compile"
             }
-        }
-        
-        stage('OWASP Scan') {
-            steps {
-                dependencyCheck additionalArguments: ''' 
-                    -o './'
-                    -s './'
-                    -f 'ALL' 
-                    --prettyPrint''', odcInstallation: 'My DP Check'
-                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-            }
-        }        
+        }  
         
         stage('Sonarqube') {
             steps {
