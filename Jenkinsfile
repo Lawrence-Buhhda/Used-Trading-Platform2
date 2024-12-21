@@ -79,7 +79,16 @@ pipeline {
                 sh "mvn clean compile"
             }
         }  
-        
+        stage('OWASP Scan') {
+            steps {
+                dependencyCheck additionalArguments: ''' 
+                    -o './'
+                    -s './'
+                    -f 'ALL' 
+                    --prettyPrint''', odcInstallation: 'My DP Check'
+                dependencyCheckPublisher pattern: 'dependency-check-report.xml'
+            }
+        }        
         stage('Sonarqube') {
             steps {
                 withSonarQubeEnv('sonar-server') {
