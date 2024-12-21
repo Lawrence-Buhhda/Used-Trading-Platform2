@@ -16,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EntityScan(basePackages = "com.wsk.*")
 @ComponentScan({"com.wsk.*"})
-@MapperScan({"com.wsk.dao"}) //扫描mybatis，需注解 @Repository Test
+@MapperScan({"com.wsk.dao"}) //扫描mybatis，需注解 @Repository Test1
 @EnableAsync
 public class UsedTradingPlatformApplication {
 
